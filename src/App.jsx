@@ -20,3 +20,6 @@ function App() {
 }
 
 export default App;
+
+// React router dom - allows us to navigate to other components as if they were pages. through the URL
+//  Each route is a different page

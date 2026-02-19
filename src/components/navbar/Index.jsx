@@ -11,3 +11,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// in react-router-dom, LINK works like an anchor <a></a>
