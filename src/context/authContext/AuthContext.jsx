@@ -27,6 +27,7 @@ export default function AuthProvider({ children }) {
   // As long as cookies doesnt change, we dont need to rerun any of these functions
   const value = useMemo(
     () => ({
+      cookies,
       login,
       logout,
       signUp,
