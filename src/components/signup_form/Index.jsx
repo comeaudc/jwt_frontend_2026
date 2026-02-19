@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "../../context/authContext/AuthContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = ({ setNewUser }) => {
+  const { signUp } = useAuth();
+  const nav = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,6 +17,19 @@ const SignUp = ({ setNewUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (formData.password !== formData.password2) {
+      alert("Passwords dont match");
+    } else {
+      await signUp(formData);
+
+      // Navigate to dashboard page
+      nav('/dashboard')
+    }
+  }
+
   const handleClick = () => {
     setNewUser(false);
   };
@@ -20,7 +37,7 @@ const SignUp = ({ setNewUser }) => {
   return (
     <div className="forms">
       <h2>SignUp</h2>
-      <form autoComplete="off">
+      <form autoComplete="off" onSubmit={handleSubmit}>
         <label htmlFor="name1">Name: </label>
         <input
           type="text"
