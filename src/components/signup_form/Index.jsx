@@ -3,6 +3,7 @@ import { useAuth } from "../../context/authContext/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = ({ setNewUser }) => {
+  const [errors, setErrors] = useState(null);
   const { signUp } = useAuth();
   const nav = useNavigate();
 
@@ -19,14 +20,17 @@ const SignUp = ({ setNewUser }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    try {
+      if (formData.password !== formData.password2) {
+        alert("Passwords dont match");
+      } else {
+        await signUp(formData);
 
-    if (formData.password !== formData.password2) {
-      alert("Passwords dont match");
-    } else {
-      await signUp(formData);
-
-      // Navigate to dashboard page
-      nav('/dashboard')
+        // Navigate to dashboard page
+        nav("/dashboard");
+      }
+    } catch (error) {
+      setErrors(error.response.data.errors.map((err) => <p>{err.msg}</p>));
     }
   }
 
@@ -80,6 +84,7 @@ const SignUp = ({ setNewUser }) => {
       <p>
         Already have an account? <button onClick={handleClick}>Sign In</button>
       </p>
+      {errors}
     </div>
   );
 };
